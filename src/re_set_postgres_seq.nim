@@ -47,7 +47,12 @@ buttonConnection.onClick = proc(event: ClickEvent) =
   let password = textBoxPassword.text
   let database = textBoxDatabase.text
 
-  let db = open(host, user, password, database)
+  var db: DbConn
+  try:
+    db = open(host, user, password, database)
+  except:
+     window.alert("Postgres connection error")
+     return
 
   let seqList = db.getAllRows(sql(getSequenceList()))
   for sequence in seqList:
