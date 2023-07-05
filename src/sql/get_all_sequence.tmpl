@@ -1,0 +1,11 @@
+#? stdtmpl | standard
+#proc getSequenceList(): string =
+
+SELECT
+    table_name,
+    column_name,
+    substring(column_default, position('''"' IN column_default) + 10, position('''::regclass' IN column_default) - position('''"' IN column_default) - 10) AS sequence_name
+FROM
+    information_schema.columns
+WHERE
+    column_default LIKE 'nextval%'

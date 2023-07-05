@@ -1,0 +1,4 @@
+#? stdtmpl | standard
+#proc resetSequenceId(sequenceName: string, pkName: string, tableName: string): string =
+
+SELECT setval('$sequenceName', (SELECT MAX($pkName) FROM $tableName));
