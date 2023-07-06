@@ -1,4 +1,4 @@
-[日本語]('README_JA.md') | English(Translated by ChatGPT.)
+[日本語](README_JA.md) | English(Translated by ChatGPT.)
 
 # Re-Set Postgres Sequence Tool
 This is a tool that issues SQL statements in PostgresSQL to update sequences to the latest value.

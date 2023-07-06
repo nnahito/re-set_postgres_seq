@@ -1,4 +1,4 @@
-日本語 | [English]('README.md')
+日本語 | [English](README.md)
 
 # Re-Set Postgres Sequence Tool
 PostgresSQLで、Sequenceを最新に更新するためのSQLを発行するツールです。  
