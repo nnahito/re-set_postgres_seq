@@ -1,5 +1,5 @@
 import NiGui
-import std/db_postgres
+import db_connector/db_postgres
 
 include "sql/get_all_sequence.tmpl"
 include "sql/reset_seq.tmpl"

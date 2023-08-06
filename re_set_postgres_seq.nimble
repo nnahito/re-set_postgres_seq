@@ -10,5 +10,6 @@ bin           = @["re_set_postgres_seq"]
 
 # Dependencies
 
-requires "nim >= 1.6.4"
+requires "nim >= 2.0.0"
 requires "https://github.com/simonkrauter/NiGui"
+requires "db_connector"
