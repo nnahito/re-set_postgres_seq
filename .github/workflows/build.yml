@@ -53,7 +53,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: プロジェクトのビルド
-        run: nimble build -d:release --app:gui
+        run: nimble build -Y -d:release --app:gui
 
       - name: exeファイルをReleasesに保存
         uses: svenstaro/upload-release-action@v2
