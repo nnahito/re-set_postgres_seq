@@ -59,7 +59,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: re_set_postgres_seq.exe
-          tag: ${{ GITHUB_OUTPUT.LATEST_TAG }}
+          tag: ${{ env.GITHUB_OUTPUT.LATEST_TAG }}
           overwrite: true
           file: re_set_postgres_seq.exe
 
