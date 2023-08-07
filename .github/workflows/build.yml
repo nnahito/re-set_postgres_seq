@@ -42,16 +42,9 @@ jobs:
           lfs: true
 
       - name: 最新タグを取得
+        id: latest-tag-string
         run: |
-          echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-
-      - name: デバッグ
-        run: |
-          echo "LATEST_TAG=$(git describe --tags --abbrev=0)"
-          echo "LATEST_TAG=$LATEST_TAG" # Debug output
-          echo "LATEST_TAG=${LATEST_TAG}" # Debug output
-          echo "LATEST_TAG=${env.LATEST_TAG}" # Debug output
-          echo "LATEST_TAG=${{ env.LATEST_TAG }}" # Debug output
+          echo "::set-output name=LATEST_TAG::$(git describe --tags --abbrev=0)"
 
       - name: Nimの環境準備
         uses: jiro4989/setup-nim-action@v1
@@ -60,14 +53,14 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: プロジェクトのビルド
-        run: nimble build -Y
+        run: nimble build -d:release --app:gui
 
       - name: exeファイルをReleasesに保存
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: re_set_postgres_seq.exe
-          tag: $(git describe --tags --abbrev=0)
+          tag: ${{ steps.latest-tag-string.outputs.LATEST_TAG }}
           overwrite: true
           file: re_set_postgres_seq.exe
 
