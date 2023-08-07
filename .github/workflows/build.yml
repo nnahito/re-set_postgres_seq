@@ -1,0 +1,66 @@
+name: 'masterマージ時に自動でtag発行し、Nimをビルドする'
+
+# このワークフローが実行されるタイミングの定義
+on:
+  # push時に実行
+  push:
+    # 対象ブランチ
+    branches:
+      - master
+
+# GitHub Actionsで行うジョブの定義
+jobs:
+  create-new-tag:
+    # Ubuntu環境で実行
+    runs-on: ubuntu-latest
+
+    # 実際のジョブ内容を記載
+    steps:
+      - name: Branchのチェックアウト
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+
+      - name: タグの発行
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          REPO_OWNER: nnahito
+
+create-release:
+    # create-new-tagのjobが終わってから実行する
+    needs: create-new-tag
+    # Windows環境で実行
+    runs-on: windows-latest
+
+    steps:
+      - name: Branchのチェックアウト
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+          lfs: true
+
+      - name: 最新タグを取得
+        id: latest-tag-string
+        run: |
+          echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+
+      - name: Nimの環境準備
+        uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: '2.0.0'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: プロジェクトのビルド
+        run: nimble build -Y
+
+      - name: exeファイルをReleasesに保存
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          asset_name: re_set_postgres_seq.exe
+          tag: ${{ steps.latest-tag-string.outputs.LATEST_TAG }}
+          overwrite: true
+          file: re_set_postgres_seq.exe
+
