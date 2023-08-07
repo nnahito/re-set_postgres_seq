@@ -28,7 +28,7 @@ jobs:
           WITH_V: true
           REPO_OWNER: nnahito
 
-create-release:
+  create-release:
     # create-new-tagのjobが終わってから実行する
     needs: create-new-tag
     # Windows環境で実行
