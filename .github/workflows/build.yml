@@ -48,6 +48,7 @@ jobs:
       - name: デバッグ
         run: |
           echo "LATEST_TAG=$(git describe --tags --abbrev=0)"
+          echo "LATEST_TAG=$LATEST_TAG" # Debug output
           echo "LATEST_TAG=${LATEST_TAG}" # Debug output
           echo "LATEST_TAG=${env.LATEST_TAG}" # Debug output
           echo "LATEST_TAG=${{ env.LATEST_TAG }}" # Debug output
