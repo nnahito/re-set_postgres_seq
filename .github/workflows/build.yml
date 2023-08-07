@@ -44,7 +44,7 @@ jobs:
       - name: 最新タグを取得
         run: |
           echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-          echo $LATEST_TAG
+          echo "LATEST_TAG=${LATEST_TAG}" # Debug output
 
       - name: Nimの環境準備
         uses: jiro4989/setup-nim-action@v1
