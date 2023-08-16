@@ -44,7 +44,7 @@ jobs:
       - name: 最新タグを取得
         id: latest-tag-string
         run: |
-          echo "latest-tag-name=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+          echo "LATEST_TAG_NAME=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
       - name: Nimの環境準備
         uses: jiro4989/setup-nim-action@v1
@@ -60,7 +60,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           asset_name: re_set_postgres_seq.exe
-          tag: ${{ steps.latest-tag-string.outputs.latest-tag-name }}
+          tag: ${{ steps.latest-tag-string.outputs.LATEST_TAG_NAME }}
           overwrite: true
           file: re_set_postgres_seq.exe
 
