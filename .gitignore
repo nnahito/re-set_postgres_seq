@@ -1,2 +1,6 @@
 *.exe
 postgresql/
+re_set_postgres_seq
+.idea
+test
+test.nim
